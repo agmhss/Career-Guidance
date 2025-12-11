@@ -23,50 +23,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Poppins', 'Noto Sans Tamil', sans-serif;
-            background: var(--bg-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-            color: #333;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            animation: fadeInDown 1s ease;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+;
             justify-content: center;
             color: white;
             font-weight: 700;
@@ -187,7 +144,234 @@
             overflow-y: auto;
             padding-right: 10px;
             margin-bottom: 25px;
-            scrollbar-width: thin;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTK Career Guide – AI + Quiz</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-bg: rgba(255,255,255,0.96);
+            --accent-green: #4CAF50;
+            --accent-purple: #9C27B0;
+            --accent-blue: #03A9F4;
+            --accent-orange: #FF9800;
+            --text-muted: #666;
+            --radius: 24px;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body{
+            font-family:'Poppins','Noto Sans Tamil',sans-serif;
+            background:var(--bg-primary);
+            min-height:100vh;
+            color:#222;
+        }
+
+        .container{
+            max-width:1100px;
+            margin:0 auto;
+            padding:16px;
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+            gap:16px;
+        }
+
+        header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:16px;
+            flex-wrap:wrap;
+        }
+
+        .brand{
+            display:flex;
+            gap:14px;
+            align-items:center;
+        }
+
+        .logo{
+            width:60px;
+            height:60px;
+            border-radius:18px;
+            background:linear-gradient(135deg,#03A9F4,#9C27B0);
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            color:white;
+            font-weight:700;
+            font-size:18px;
+            box-shadow:0 10px 28px rgba(0,0,0,0.25);
+        }
+
+        .brand-title h1{
+            margin:0;
+            font-size:20px;
+            color:#fff;
+        }
+
+        .brand-title p{
+            margin:0;
+            font-size:13px;
+            color:rgba(255,255,255,0.9);
+        }
+
+        .lang-toggle{
+            display:flex;
+            gap:8px;
+            background:rgba(255,255,255,0.22);
+            padding:6px;
+            border-radius:999px;
+            backdrop-filter:blur(14px);
+        }
+
+        .lang-btn{
+            border:none;
+            background:transparent;
+            padding:8px 14px;
+            border-radius:999px;
+            color:#f5f5f5;
+            font-size:13px;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.25s;
+        }
+
+        .lang-btn.active{
+            background:#fff;
+            color:#333;
+            box-shadow:0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .main-grid{
+            display:grid;
+            grid-template-columns:1.1fr 0.9fr;
+            gap:16px;
+        }
+
+        @media(max-width:900px){
+            .main-grid{ grid-template-columns:1fr; }
+        }
+
+        /* Chat section */
+        .chat-section{
+            background:var(--card-bg);
+            border-radius:var(--radius);
+            padding:18px;
+            box-shadow:0 14px 32px rgba(0,0,0,0.18);
+            display:flex;
+            flex-direction:column;
+            height:520px;
+        }
+
+        .section-title{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            margin-bottom:8px;
+        }
+
+        .section-title h2{
+            font-size:16px;
+            margin:0;
+            color:#4b4b4b;
+        }
+
+        .chat-messages{
+            flex:1;
+            margin-top:6px;
+            padding-right:6px;
+            overflow-y:auto;
+        }
+
+        .message{
+            max-width:80%;
+            padding:10px 14px;
+            border-radius:18px;
+            margin-bottom:10px;
+            font-size:13px;
+            line-height:1.4;
+        }
+
+        .ai-message{
+            background:linear-gradient(135deg,#43e97b,#38f9d7);
+            margin-right:auto;
+        }
+
+        .user-message{
+            background:linear-gradient(135deg,#4facfe,#00f2fe);
+            color:#fff;
+            margin-left:auto;
+        }
+
+        .typing-indicator{
+            display:none;
+            font-size:12px;
+            color:var(--text-muted);
+            margin-bottom:6px;
+        }
+
+        .input-row{
+            display:flex;
+            gap:8px;
+            margin-top:8px;
+        }
+
+        #userInput{
+            flex:1;
+            border-radius:999px;
+            border:none;
+            padding:10px 14px;
+            font-size:13px;
+            outline:none;
+            background:#f1f3fb;
+        }
+
+        #sendBtn{
+            border:none;
+            border-radius:999px;
+            padding:10px 18px;
+            background:linear-gradient(135deg,#ff6b6b,#ff8e8e);
+            color:#fff;
+            font-size:13px;
+            font-weight:600;
+            cursor:pointer;
+        }
+
+        .quick-buttons{
+            display:flex;
+            flex-wrap:wrap;
+            gap:6px;
+            margin-top:10px;
+        }
+
+        .quick-btn{
+            border:none;
+            border-radius:999px;
+            padding:7px 10px;
+            background:linear-gradient(135deg,#a8edea,#fed6e3);
+            font-size:11px;
+            cursor:pointer;
+        }
+
+        /* Quiz section */
+        .quiz-card{
+            background:var(--card-bg);
+            border-radius:var(--radius);
+            padding:16px;
+            box-shadow:0 14px 32px rgba(0,0,0,0.18);
+            display:flex;
+            flex-direction:column;
+            height:520px;
+            }            scrollbar-width: thin;
             scrollbar-color: rgba(3,169,244,0.3) transparent;
         }
         
@@ -212,461 +396,290 @@
             animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
             line-height: 1.6;
+             /* Quiz section */
+        .quiz-card{
+            background:var(--card-bg);
+            border-radius:var(--radius);
+            padding:16px;
+            box-shadow:0 14px 32px rgba(0,0,0,0.18);
+            display:flex;
+            flex-direction:column;
+            height:520px;
         }
-        
-        .user-message {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            margin-left: auto;
-            border-bottom-right-radius: 8px;
+
+        .quiz-questions{
+            flex:1;
+            overflow-y:auto;
+            margin-top:6px;
+            padding-right:6px;
+            font-size:13px;
         }
-        
-        .ai-message {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            color: #2d2d2d;
-            margin-right: auto;
-            border-bottom-left-radius: 8px;
+
+        .question{
+            border-radius:14px;
+            border:1px solid #e3ebff;
+            padding:10px 10px 8px;
+            margin-bottom:8px;
+            background:linear-gradient(180deg,#ffffff,#f7fbff);
         }
-        
-        .typing-indicator {
-            display: none;
-            padding: 18px 24px;
-            background: linear-gradient(135deg, #f8f9ff, #f0f4ff);
-            border-radius: 25px;
-            max-width: 80%;
-            margin-right: auto;
-            border: 1px solid rgba(3,169,244,0.2);
+
+        .question p{
+            margin:0 0 6px 0;
+            font-weight:600;
         }
-        
-        .typing-dots {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
+
+        .options{
+            display:flex;
+            gap:6px;
+            flex-wrap:wrap;
         }
-        
-        .typing-dots span {
-            height: 10px;
-            width: 10px;
-            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
-            border-radius: 50%;
-            animation: bounce 1.4s infinite ease-in-out both;
+
+        .option{
+            border-radius:999px;
+            border:1px solid #dfe7ff;
+            padding:6px 9px;
+            font-size:11px;
+            cursor:pointer;
+            background:#fff;
         }
-        
-        .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
-        
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
+
+        .option.selected{
+            background:linear-gradient(135deg,#4CAF50,#03A9F4);
+            color:#fff;
+            border:none;
         }
-        
-        .input-container {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
+
+        .quiz-actions{
+            display:flex;
+            gap:8px;
+            margin-top:8px;
         }
-        
-        #userInput {
-            flex: 1;
-            padding: 18px 28px;
-            border: 2px solid rgba(3,169,244,0.2);
-            border-radius: 50px;
-            font-size: 16px;
-            outline: none;
-            background: rgba(255,255,255,0.8);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-family: inherit;
+
+        .btn{
+            flex:1;
+            border-radius:999px;
+            border:none;
+            padding:9px 0;
+            font-size:13px;
+            font-weight:600;
+            cursor:pointer;
         }
-        
-        #userInput:focus {
-            border-color: var(--accent-blue);
-            box-shadow: 0 15px 40px rgba(3,169,244,0.2);
-            transform: translateY(-2px);
-            background: white;
+
+        .btn-primary{
+            background:linear-gradient(135deg,#9C27B0,#03A9F4);
+            color:#fff;
         }
-        
-        #sendBtn {
-            padding: 18px 35px;
-            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 12px 35px rgba(255,107,107,0.4);
-            font-family: inherit;
+
+        .btn-secondary{
+            background:transparent;
+            color:#03A9F4;
+            border:1px solid #03A9F4;
         }
-        
-        #sendBtn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 45px rgba(255,107,107,0.6);
+
+        .result{
+            margin-top:8px;
+            border-radius:14px;
+            border:1px solid #c8f3d6;
+            background:linear-gradient(180deg,#f7fff9,#ffffff);
+            padding:10px 12px;
+            font-size:12px;
         }
-        
-        #sendBtn:active {
-            transform: translateY(-2px);
-        }
-        
-        /* Quick Buttons */
-        .quick-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        
-        .quick-btn {
-            padding: 14px 24px;
-            background: linear-gradient(135deg, #a8edea, #fed6e3);
-            color: #333;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            font-family: inherit;
-        }
-        
-        .quick-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-        }
-        
-        /* Quiz Section */
-        .quiz-section {
-            height: 700px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-        
-        .quiz-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 30px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.2);
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            animation: fadeInUp 1s ease 0.4s both;
-        }
-        
-        .quiz-desc {
-            color: var(--text-muted);
-            font-size: 15px;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-        
-        .quiz-questions {
-            flex: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            padding-right: 10px;
-            scrollbar-width: thin;
-        }
-        
-        .question {
-            padding: 25px;
-            border-radius: 20px;
-            border: 2px solid rgba(3,169,244,0.1);
-            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(251,254,255,0.8));
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .question::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue), var(--accent-purple));
-        }
-        
-        .question:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(3,169,244,0.15);
-        }
-        
-        .question p {
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #2d2d2d;
-            font-size: 15px;
-            line-height: 1.5;
-        }
-        
-        .question-number {
-            display: inline-block;
-            background: linear-gradient(45deg, var(--accent-orange), var(--accent-green));
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-        
-        .options {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        
-        .option {
-            flex: 1;
-            min-width: 130px;
-            padding: 16px 20px;
-            border: 2px solid rgba(3,169,244,0.2);
-            border-radius: 18px;
-            cursor: pointer;
-            background: white;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-weight: 500;
-            font-size: 14px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .option::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.6s;
-        }
-        
-        .option:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .option:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(3,169,244,0.2);
-        }
-        
-        .option.selected {
-            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 15px 40px rgba(76,175,80,0.4);
-            transform: scale(1.02);
-        }
-        
-        .quiz-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: auto;
-        }
-        
-        .btn {
-            flex: 1;
-            padding: 18px 24px;
-            border: none;
-            border-radius: 25px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 16px;
-            font-family: inherit;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-            color: white;
-            box-shadow: 0 12px 35px rgba(156,39,176,0.4);
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            color: var(--accent-blue);
-            border: 2px solid var(--accent-blue);
-        }
-        
-        .btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 45px rgba(0,0,0,0.2);
-        }
-        
-        /* Result */
-        .result {
-            background: linear-gradient(135deg, #f0fdf4, #f7fee7);
-            border: 2px solid rgba(76,175,80,0.3);
-            border-radius: 20px;
-            padding: 30px;
-            margin-top: 25px;
-            animation: bounceIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .result h3 {
-            color: var(--accent-green);
-            margin-bottom: 20px;
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .result ul {
-            padding-left: 25px;
-            margin-bottom: 20px;
-        }
-        
-        .result li {
-            margin-bottom: 12px;
-            padding: 12px;
-            background: rgba(255,255,255,0.7);
-            border-radius: 12px;
-            border-left: 4px solid var(--accent-green);
-        }
-        
-        /* Particles */
-        .floating-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-        
-        .particle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: radial-gradient(circle, rgba(255,255,255,0.8), rgba(255,255,255,0.3));
-            border-radius: 50%;
-            animation: float 8s infinite linear;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg) scale(0); opacity: 0; }
-            10% { opacity: 1; transform: scale(1); }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100px) rotate(360deg) scale(1.2); opacity: 0; }
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container { padding: 15px; }
-            .header { flex-direction: column; text-align: center; }
-            .main-grid { gap: 20px; }
-            .chat-section, .quiz-card { height: 550px; padding: 25px; }
-            .brand-title h1 { font-size: 2rem; }
-        }
-        
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); } 70% { transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+
+        .small-muted{ font-size:11px;color:var(--text-muted); }
     </style>
 </head>
 <body>
-    <div class="floating-particles" id="particles"></div>
-    
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="brand">
-                <div class="logo">
-                    🎓<br>AI
-                </div>
-                <div class="brand-title">
-                    <h1 id="brand-title">GTK Career Guide</h1>
-                    <p id="brand-sub">Tamil Nadu Courses • Jobs • Admissions • Scholarships</p>
-                </div>
+<div class="container">
+    <header>
+        <div class="brand">
+            <div class="logo">AI<br>CG</div>
+            <div class="brand-title">
+                <h1 id="brand-title">GTK Career Guide</h1>
+                <p id="brand-sub">Tamil Nadu Courses · Jobs · Admissions · Scholarships</p>
             </div>
-            <div class="lang-toggle" role="tablist">
-                <button id="lang-en" class="lang-btn active" aria-pressed="true">🇬🇧 English</button>
-                <button id="lang-ta" class="lang-btn" aria-pressed="false">🇮🇳 தமிழ்</button>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <div class="main-grid">
-            <!-- AI Chat -->
-            <section class="chat-section">
-                <div class="section-title">
-                    <span class="icon">💬</span>
-                    <h2 id="chat-title">AI Career Assistant</h2>
-                </div>
-                
-                <div class="chat-messages" id="chatMessages">
-                    <div class="message ai-message">
-                        <strong id="welcome-msg">வணக்கம்! 👋 TNEA, TNPSC, படிப்பு உதவித்தொகை பற்றி கேளுங்கள் அல்லது Quiz எடுங்கள்!</strong>
-                    </div>
-                </div>
-                
-                <div class="typing-indicator" id="typingIndicator">
-                    <span id="typing-text">AI சிந்திக்கிறது...</span>
-                    <span class="typing-dots"><span></span><span></span><span></span></span>
-                </div>
-                
-                <div class="input-container">
-                    <input type="text" id="userInput" placeholder="TNEA counselling, TNPSC jobs, scholarships..." autocomplete="off">
-                    <button id="sendBtn">
-                        🚀 <span id="send-text">Send</span>
-                    </button>
-                </div>
-                
-                <div class="quick-buttons" id="quickButtons"></div>
-            </section>
-
-      <!-- Career Quiz -->
-            <aside class="quiz-section">
-                <div class="quiz-card">
-                    <div class="section-title">
-                        <span class="icon">📊</span>
-                        <h2 id="quiz-title">Career Quiz</h2>
-                    </div>
-                    <p class="quiz-desc" id="quiz-desc">10 quick questions to discover your perfect career path</p>
-                    
-                    <div class="quiz-questions" id="quiz">
-                        <!-- Questions rendered by JavaScript -->
-                    </div>
-                    
-                    <div class="quiz-actions">
-                        <button class="btn btn-primary" id="submit-quiz">
-                            <span id="submit-text">See Results</span>
-                        </button>
-                        <button class="btn btn-secondary" id="reset-quiz">
-                            <span id="reset-text">Reset Quiz</span>
-                        </button>
-                    </div>
-                    
-                    <div id="result-area" style="display: none;">
-                        <div class="result" id="result-box">
-                            <!-- Results rendered by JavaScript -->
-                        </div>
-                    </div>
-                </div>
-            </aside>
         </div>
-    </div>
+        <div class="lang-toggle">
+            <button id="lang-en" class="lang-btn active">🇬🇧 English</button>
+            <button id="lang-ta" class="lang-btn">🇮🇳 தமிழ்</button>
+        </div>
+    </header>
 
-    <script>
+    <div class="main-grid">
+        <!-- CHAT -->
+        <section class="chat-section">
+            <div class="section-title">
+                <h2 id="chat-title">AI Career Assistant</h2>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai-message" id="welcome-msg">
+                    வணக்கம்! 👋 TNEA, TNPSC, படிப்புத் தவி, மருத்துவச் சேர்க்கை பற்றி கேளுங்கள். கீழே உள்ள Quiz மூலம் உங்களுக்கு ஏற்ற துறையைவும் அறியலாம்.
+                </div>
+            </div>
+            <div class="typing-indicator" id="typingIndicator">AI சிந்திக்கிறது…</div>
+            <div class="input-row">
+                <input id="userInput" type="text" placeholder="TNPSC jobs, TNEA counselling, NEET medical seats...">
+                <button id="sendBtn">Send</button>
+            </div>
+            <div class="quick-buttons" id="quickButtons"></div>
+        </section>
+
+        <!-- QUIZ -->
+        <section class="quiz-card">
+            <div class="section-title">
+                <h2 id="quiz-title">Career Interest Quiz</h2>
+            </div>
+            <p class="small-muted" id="quiz-desc">10 quick questions to discover your perfect career path (Tamil Nadu focus).</p>
+
+            <div class="quiz-questions" id="quiz"></div>
+
+            <div class="quiz-actions">
+                <button class="btn btn-primary" id="submit-quiz">See results</button>
+                <button class="btn btn-secondary" id="reset-quiz">Reset quiz</button>
+            </div>
+
+            <div id="result-area" style="display:none">
+                <div class="result" id="result-box"></div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+/* TEXT DATA */
+const STR = {
+    en:{
+        brandTitle:'GTK Career Guide',
+        brandSub:'Tamil Nadu Courses · Jobs · Admissions · Scholarships',
+        chatTitle:'AI Career Assistant',
+        welcomeMsg:'Hi! 👋 Ask about TNEA counselling, TNPSC jobs, scholarships, NEET medical seats, etc. Use the quiz on the right to discover suitable streams.',
+        quizTitle:'Career Interest Quiz',
+        quizDesc:'Answer these 10 short questions. There are no right or wrong answers – it just finds what suits you.',
+        sendText:'Send',
+        typing:'AI is thinking…',
+        quick:['TNEA 2025 counselling','TNPSC Group 4 jobs','Anna University CSE cutoff','Tamil Nadu scholarships','NEET 2025 MBBS cut off','Polytechnic after 10th'],
+        questions:[
+            {q:'Do you enjoy solving math or logical puzzles?',a:['Yes – I love numbers','Sometimes','Not really']},
+            {q:'Do you like working with plants or animals?',a:['Yes','A little','Not at all']},
+            {q:'Do you enjoy reading or writing about people and society?',a:['Yes','Sometimes','No']},
+            {q:'Are you interested in drawing, design or creative arts?',a:['Very interested','Somewhat','Not interested']},
+            {q:'Do you like building or repairing machines/devices?',a:['Love it','Sometimes','No']},
+            {q:'Do you enjoy teaching, helping others or social work?',a:['Yes','A bit','No']},
+            {q:'Do you like computers, coding or technology?',a:['Yes','A little','Not really']},
+            {q:'Do you prefer a steady government job?',a:['Yes','Maybe later','No']},
+            {q:'Are you interested in business, sales or starting a small enterprise?',a:['Yes','Maybe','No']},
+            {q:'Do you enjoy lab work and experiments?',a:['Yes','Sometimes','No']}
+        ]
+    },
+    ta:{
+        brandTitle:'GTK Career Guide',
+        brandSub:'தமிழ்நாடு · படிப்புகள் · வேலைகள் · சேர்க்கை · படிப்புத் தவி',
+        chatTitle:'AI தொழில் உதவியாளர்',
+        welcomeMsg:'வணக்கம்! 👋 TNEA, TNPSC, படிப்புத் தவி, NEET மருத்துவச் சேர்க்கை பற்றி கேளுங்கள். வலது பக்கம் உள்ள Quiz மூலம் உங்களுக்கு ஏற்ற துறையை கண்டறியலாம்.',
+        quizTitle:'தொழில் ஆர்வ Quiz',
+        quizDesc:'10 குறுகிய கேள்விகளுக்கு பதில் அளியுங்கள். சரி/தவறு எதுவும் இல்லை – உங்களுக்கு பொருத்தமான துறையை காட்டும்.',
+        sendText:'அனுப்பு',
+        typing:'AI சிந்திக்கிறது…',
+        quick:['TNEA 2025 கவுன்சலிங்','TNPSC Group 4 வேலைகள்','அண்ணா பல்கலை CSE cutoff','தமிழ்நாடு படிப்புத் தவி','NEET 2025 MBBS cutoff','10ஆம் பிறகு பாலிடெக்னிக்'],
+        questions:[
+            {q:'எண்கள்/மறுபதிவுகள் போன்ற புதிர்களைத் தீர்க்க விருப்பமா?',a:['ஆம் – மிகவும் பிடிக்கும்','சில நேரம்','பிடிக்காது']},
+            {q:'செடிகள்/விலங்குகளுடன் வேலை செய்ய விருப்பமா?',a:['ஆம்','சற்றே','மொத்தமும் இல்லை']},
+            {q:'மக்கள் மற்றும் சமூகத்தைப் பற்றி வாசிக்க/எழுத பிடிக்குமா?',a:['ஆம்','சில நேரம்','இல்லை']},
+            {q:'வரைதல், டிசைன், படைப்பாற்றல் பணிகளில் ஆர்வமா?',a:['மிகவும்','சில அளவு','இல்லை']},
+            {q:'யந்திரங்களை உருவாக்கவும் சரி செய்யவும் விருப்பமா?',a:['பிடிக்கும்','சில சமயம்','இல்லை']},
+            {q:'கற்பித்தல், பிறருக்கு உதவி அல்லது சமூகப் பணியில் ஆர்வமா?',a:['ஆம்','சிறிது','இல்லை']},
+            {q:'கணினி, நிரலாக்கம் அல்லது தொழில்நுட்பம் பிடிக்குமா?',a:['ஆம்','சற்றே','இல்லை']},
+            {q:'நிலையான அரசு வேலை வேண்டுமா?',a:['ஆம்','பார்க்கலாம்','இல்லை']},
+            {q:'வணிகம், விற்பனை அல்லது சிறு தொழில் ஆரம்பிக்க விருப்பமா?',a:['ஆம்','முடியும்','இல்லை']},
+            {q:'ஆய்வக வேலை மற்றும் பரிசோதனைகள் பிடிக்குமா?',a:['ஆம்','சில நேரம்','இல்லை']}
+        ]
+    }
+};
+
+let LANG='ta';       // default Tamil like in screenshot
+let answers=new Array(10).fill(null);
+
+/* QUIZ BUCKETS */
+const BUCKET_NAMES={
+    en:{R:'Engineering/Technical',I:'Medical/Science',A:'Creative/Design',S:'Teaching/Social',E:'Business/Management',C:'Government/Admin'},
+    ta:{R:'பொறியியல்/தொழில்நுட்பம்',I:'மருத்துவம்/அறிவியல்',A:'படைப்பு/டிசைன்',S:'கற்பித்தல்/சமூக சேவை',E:'வணிகம்/மேலாண்மை',C:'அரசு/நிர்வாகம்'}
+};
+const Q_MAP=[
+    ['I','C','A'],
+    ['I','S','R'],
+    ['S','A','C'],
+    ['A','S','R'],
+    ['R','I','C'],
+    ['S','A','E'],
+    ['I','C','R'],
+    ['C','E','S'],
+    ['E','C','S'],
+    ['I','R','C']
+];
+
+function $(id){return document.getElementById(id);}
+
+/* LANGUAGE RENDER */
+function applyLang(){
+    const s=STR[LANG];
+    $('brand-title').textContent=s.brandTitle;
+    $('brand-sub').textContent=s.brandSub;
+    $('chat-title').textContent=s.chatTitle;
+    $('welcome-msg').textContent=s.welcomeMsg;
+    $('quiz-title').textContent=s.quizTitle;
+    $('quiz-desc').textContent=s.quizDesc;
+    $('sendBtn').textContent=s.sendText;
+    $('typingIndicator').textContent=s.typing;
+
+    // toggle active button
+    $('lang-en').classList.toggle('active',LANG==='en');
+    $('lang-ta').classList.toggle('active',LANG==='ta');
+
+    renderQuickButtons();
+    renderQuiz();
+}
+
+/* QUIZ RENDER */
+function renderQuiz(){
+    const s=STR[LANG];
+    const container=$('quiz');
+    container.innerHTML='';
+    answers.forEach((val,i)=>{
+        const q=s.questions[i];
+        const wrap=document.createElement('div');
+        wrap.className='question';
+        const p=document.createElement('p');
+        p.textContent=(i+1)+'. '+q.q;
+        wrap.appendChild(p);
+
+        const optWrap=document.createElement('div');
+        optWrap.className='options';
+        q.a.forEach((txt,idx)=>{
+            const btn=document.createElement('div');
+            btn.className='option';
+            btn.textContent=txt;
+            if(val===idx) btn.classList.add('selected');
+            btn.onclick=()=>{
+                answers[i]=idx;
+                Array.from(optWrap.children).forEach(c=>c.classList.remove('selected'));
+                btn.classList.add('selected');
+            };
+            optWrap.appendChild(btn);
+        });
+        wrap.appendChild(optWrap);
+        container.appendChild(wrap);
+    });
+}
+    /* QUIZ RESULT */
+function showResult(){
+    const counts={R:0,I:0,A:0,S:0,E:0,C:0};
+    let answered=0;
+    answers.forEach((ans,i)=>{
+        if(ans!==null){
+            const bucket=Q_MAP[i][ans];
+            counts[bucket]++;
+            answered++;
+        }
+
         // ========================================
         // BILINGUAL CONTENT & STATE
         // ========================================
