@@ -32,6 +32,7 @@
             cursor: pointer;
             border-radius: 5px;
             font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
         }
         .lang-selector button:hover { background-color: #e0a800; transform: scale(1.05); }
 
@@ -51,7 +52,11 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.05);
             margin-bottom: 30px;
         }
-        .quiz-section h2 { color: #007bff; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        .quiz-section h2 { 
+            color: #007bff; 
+            border-bottom: 2px solid #007bff; 
+            padding-bottom: 10px; 
+        }
 
         .question-card {
             background-color: #f8f9fa;
@@ -60,6 +65,7 @@
             margin-bottom: 15px;
             border-radius: 5px;
         }
+        .question-card label { display: block; cursor: pointer; padding: 5px 0; }
 
         #submit-btn {
             background-color: #dc3545;
@@ -70,6 +76,7 @@
             border-radius: 5px;
             cursor: pointer;
             margin-top: 20px;
+            transition: background-color 0.3s;
         }
         #submit-btn:hover { background-color: #c82333; }
 
@@ -92,8 +99,35 @@
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
             border-top: 5px solid #17a2b8;
         }
+        .admissions-card a, .scholarship-card a {
+            display: inline-block;
+            background-color: #17a2b8;
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        .admissions-card a:hover, .scholarship-card a:hover { background-color: #117a8b; }
 
-        /* ========== GROK AI CHATBOT ========== */
+        #resource-links {
+            list-style: none;
+            padding: 0;
+        }
+        #resource-links li {
+            background-color: #e8f5e9;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #resource-links li a {
+            color: #28a745;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* ========== FIXED GROK AI CHATBOT ========== */
         #chatbot-toggle {
             position: fixed;
             bottom: 25px;
@@ -108,15 +142,19 @@
             cursor: pointer;
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
             z-index: 1000;
+            transition: transform 0.2s, background 0.3s;
         }
-        #chatbot-toggle:hover { transform: scale(1.1); }
+        #chatbot-toggle:hover { 
+            transform: scale(1.1); 
+            background: linear-gradient(135deg, #e65100, #ff6f00);
+        }
 
         #chatbot-box {
             position: fixed;
             bottom: 100px;
             right: 25px;
             width: 380px;
-            height: 580px;
+            height: 200px; /* Smaller now, since it's a prompt box */
             background: white;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -125,23 +163,48 @@
             z-index: 1000;
             border: 4px solid #ff6f00;
             overflow: hidden;
+            text-align: center;
+            padding: 20px;
+            justify-content: center;
         }
         #chatbot-header {
             background: linear-gradient(135deg, #ff6f00, #ff9a00);
             color: white;
             padding: 15px;
-            text-align: center;
+            border-radius: 12px 12px 0 0;
             font-weight: bold;
             font-size: 1.1em;
+            margin: -20px -20px 10px -20px;
         }
-        #grok-iframe {
-            flex: 1;
+        #grok-prompt {
+            font-size: 0.95em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        #open-grok-btn {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
             border: none;
-            width: 100%;
-            height: 100%;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        #open-grok-btn:hover { transform: scale(1.05); }
+
+        footer { 
+            text-align: center; 
+            padding: 20px; 
+            background: #eee; 
+            margin-top: 50px; 
+            color: #555; 
         }
 
-        footer { text-align: center; padding: 20px; background:#eee; margin-top:50px; }
+        @media (max-width: 768px) {
+            #chatbot-box { width: 90vw; right: 5vw; }
+            .hero-section h1 { font-size: 2em; }
+        }
     </style>
 </head>
 <body>
@@ -167,15 +230,15 @@
                 <div class="question-card">
                     <p id="q1">1. சிக்கலான கணிதப் பிரச்சனைகளைத் தீர்ப்பதில் நீங்கள் மகிழ்ச்சி அடைகிறீர்களா?</p>
                     <label><input type="radio" name="q1" value="sci-math" required> <span id="q1-opt1">ஆம்</span></label><br>
-                    <label><input type="radio" name="q1 value="arts-hum"> <span id="q1-opt2">இல்லை</span></label>
+                    <label><input type="radio" name="q1" value="arts-hum"> <span id="q1-opt2">இல்லை</span></label>
                 </div>
                 <div class="question-card">
-                    <p id="q2">2. கதை எழுதுவது, ஓவியம் வரைவது அல்லது இசை உருவாக்குவதில் ஆர்வம் உள்ளதா?</p>
+                    <p id="q2">2. கதை எழுதுவது, ஓவியம் வரைவது அல்லது இசை உருவாக்குவதில் நீங்கள் ஆர்வம் உள்ளவரா?</p>
                     <label><input type="radio" name="q2" value="arts-hum" required> <span id="q2-opt1">ஆம்</span></label><br>
                     <label><input type="radio" name="q2" value="commerce"> <span id="q2-opt2">இல்லை</span></label>
                 </div>
                 <div class="question-card">
-                    <p id="q3">3. சந்தை, பங்குச் சந்தை, பண மேலாண்மை போன்றவற்றில் ஆர்வம் உள்ளதா?</p>
+                    <p id="q3">3. சந்தை போக்குகளைப் பற்றி பகுப்பாய்வு செய்வதிலும், பணம் மற்றும் நிதி மேலாண்மையிலும் நீங்கள் ஆர்வம் உள்ளவரா?</p>
                     <label><input type="radio" name="q3" value="commerce" required> <span id="q3-opt1">ஆம்</span></label><br>
                     <label><input type="radio" name="q3" value="sci-math"> <span id="q3-opt2">இல்லை</span></label>
                 </div>
@@ -183,34 +246,37 @@
             </form>
         </section>
 
-        <section id="results-section">
+        <section id="results-section" style="display: none;">
             <h2 id="results-heading">உங்கள் பரிந்துரைக்கப்பட்ட பாதை</h2>
             <div id="suggested-stream" class="stream-result">மேலே உள்ள கேள்விகளுக்கு பதில் அளிக்கவும்</div>
+            <h3 id="resources-title">முக்கிய ஆதாரங்கள் மற்றும் இணைப்புகள்</h3>
             <ul id="resource-links"></ul>
 
             <div class="admissions-card">
                 <h4 id="admissions-title">சேர்க்கை வழிகாட்டி</h4>
-                <p id="admissions-content">TNEA, NEET, JEE போன்ற நுழைவுத் தேர்வுகளுக்கான இணைப்புகள்.</p>
-                <a href="#" id="admissions-link" target="_blank">மேலும் அறிக</a>
+                <p id="admissions-content">TNEA, NEET, JEE போன்ற நுழைவுத் தேர்வுகளுக்கான விண்ணப்பப் படிவங்கள் மற்றும் கால அட்டவணைகள் இங்கே கிடைக்கும்.</p>
+                <a href="https://www.tneaonline.org/" id="admissions-link" target="_blank">மேலும் அறிக</a>
             </div>
 
             <div class="scholarship-card">
                 <h4 id="scholarship-title">உதவித்தொகை வாய்ப்புகள்</h4>
-                <p id="scholarship-content">முதல் பட்டதாரி உதவித்தொகை, கல்விக் கடன் போன்றவை.</p>
-                <a href="#" id="scholarship-link" target="_blank">விண்ணப்பிக்கவும்</a>
+                <p id="scholarship-content">முதல் பட்டதாரி உதவித்தொகை, கல்வி கடன் திட்டங்களுக்கான இணைப்புகள்.</p>
+                <a href="https://www.tnesc.in/" id="scholarship-link" target="_blank">விண்ணப்பிக்கவும்</a>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>© 2025 GTK Pathfinder - மாணவர்களுக்கான வழிகாட்டி</p>
+        <p>&copy; 2025 GTK Pathfinder - மாணவர்களுக்கான வழிகாட்டி</p>
     </footer>
 
-    <!-- GROK AI CHATBOT (இலவசம் + உண்மையான AI) -->
-    <button id="chatbot-toggle">AI</button>
+    <!-- FIXED GROK AI BUTTON (Opens in New Tab) -->
+    <button id="chatbot-toggle" title="Chat with Grok AI">🤖</button>
     <div id="chatbot-box">
         <div id="chatbot-header">Grok AI – உங்கள் தொழில் வழிகாட்டி</div>
-        <iframe id="grok-iframe" src="https://grok.x.ai" title="Grok AI by xAI" allowfullscreen></iframe>
+        <p id="grok-prompt">தொழில் வழிகாட்டி, படிப்பு வாய்ப்புகள் அல்லது தேர்வுகள் பற்றி கேளுங்கள்! (அல்லது ஆங்கிலத்தில்)</p>
+        <button id="open-grok-btn" onclick="openGrok()">Grok AI-ஐ திறக்கவும் (New Tab)</button>
+        <small style="color: #999; margin-top: 10px; display: block;">இலவசம் & உண்மையான AI</small>
     </div>
 
     <script>
@@ -223,14 +289,23 @@
                 'mot-quote': '"The future belongs to those who believe in the beauty of their dreams." - Eleanor Roosevelt',
                 'quiz-title': 'Assess Your Aptitude',
                 'q1': '1. Do you enjoy solving complex math problems?', 'q1-opt1': 'Yes', 'q1-opt2': 'No',
-                'q2': '2. Interested in writing, painting, or music?', 'q2-opt1': 'Yes', 'q2-opt2': 'No',
-                'q3': '3. Interested in finance & market trends?', 'q3-opt1': 'Yes', 'q3-opt2': 'No',
+                'q2': '2. Are you interested in writing stories, painting, or creating music?', 'q2-opt1': 'Yes', 'q2-opt2': 'No',
+                'q3': '3. Are you interested in analyzing market trends, and managing money and finance?', 'q3-opt1': 'Yes', 'q3-opt2': 'No',
                 'submit-btn': 'See Results',
                 'results-heading': 'Your Recommended Path',
-                'stream-sci-math': 'Science & Engineering',
-                'stream-arts-hum': 'Arts & Humanities',
-                'stream-commerce': 'Commerce & Finance',
-                'chatbot-header': 'Grok AI – Career Expert'
+                'resources-title': 'Key Resources & Links',
+                'admissions-title': 'Admissions Guide',
+                'admissions-content': 'Application forms and schedules for entrance exams like TNEA, NEET, JEE are available here.',
+                'admissions-link': 'Learn More',
+                'scholarship-title': 'Scholarship Opportunities',
+                'scholarship-content': 'Links for First Graduate Scholarship, educational loan schemes.',
+                'scholarship-link': 'Apply Now',
+                'stream-sci-math': 'Science & Engineering (B.E./B.Tech/B.Sc)',
+                'stream-arts-hum': 'Arts & Humanities (B.A./B.Sc/Law)',
+                'stream-commerce': 'Commerce & Finance (B.Com/CA/BBA)',
+                'grok-prompt': 'Ask about career guidance, courses, or exams! (or in English)',
+                'chatbot-header': 'Grok AI – Career Expert',
+                'open-grok-btn': 'Open Grok AI (New Tab)'
             },
             'ta': {
                 'page-title': 'உங்கள் எதிர்காலத்தை வடிவமைக்கவும் - GTK Pathfinder',
@@ -239,15 +314,24 @@
                 'mot-heading': 'உங்கள் திறனை ஆராயுங்கள்!',
                 'mot-quote': '"எதிர்காலம் என்பது, அவர்களின் கனவுகளின் அழகை நம்புபவர்களுக்குச் சொந்தமானது." - எலினோர் ரூஸ்வெல்ட்',
                 'quiz-title': 'உங்கள் நாட்டத்தை மதிப்பிடுங்கள்',
-                'q1': '1. சிக்கலான கணிதப் பிரச்சனைகளைத் தீர்ப்பதில் மகிழ்ச்சி அடைகிறீர்களா?', 'q1-opt1': 'ஆம்', 'q1-opt2': 'இல்லை',
-                'q2': '2. கதை, ஓவியம், இசை போன்றவற்றில் ஆர்வம் உள்ளதா?', 'q2-opt1': 'ஆம்', 'q2-opt2': 'இல்லை',
-                'q3': '3. நிதி, சந்தை பகுப்பாய்வு போன்றவற்றில் ஆர்வம் உள்ளதா?', 'q3-opt1': 'ஆம்', 'q3-opt2': 'இல்லை',
+                'q1': '1. சிக்கலான கணிதப் பிரச்சனைகளைத் தீர்ப்பதில் நீங்கள் மகிழ்ச்சி அடைகிறீர்களா?', 'q1-opt1': 'ஆம்', 'q1-opt2': 'இல்லை',
+                'q2': '2. கதை எழுதுவது, ஓவியம் வரைவது அல்லது இசை உருவாக்குவதில் நீங்கள் ஆர்வம் உள்ளவரா?', 'q2-opt1': 'ஆம்', 'q2-opt2': 'இல்லை',
+                'q3': '3. சந்தை போக்குகளைப் பற்றி பகுப்பாய்வு செய்வதிலும், பணம் மற்றும் நிதி மேலாண்மையிலும் நீங்கள் ஆர்வம் உள்ளவரா?', 'q3-opt1': 'ஆம்', 'q3-opt2': 'இல்லை',
                 'submit-btn': 'முடிவுகளைப் பார்க்கவும்',
                 'results-heading': 'உங்கள் பரிந்துரைக்கப்பட்ட பாதை',
-                'stream-sci-math': 'அறிவியல் & பொறியியல்',
-                'stream-arts-hum': 'கலை & மனிதநேயம்',
-                'stream-commerce': 'வர்த்தகம் & நிதி',
-                'chatbot-header': 'Grok AI – உங்கள் தொழில் வழிகாட்டி'
+                'resources-title': 'முக்கிய ஆதாரங்கள் மற்றும் இணைப்புகள்',
+                'admissions-title': 'சேர்க்கை வழிகாட்டி',
+                'admissions-content': 'TNEA, NEET, JEE போன்ற நுழைவுத் தேர்வுகளுக்கான விண்ணப்பப் படிவங்கள் மற்றும் கால அட்டவணைகள் இங்கே கிடைக்கும்.',
+                'admissions-link': 'மேலும் அறிக',
+                'scholarship-title': 'உதவித்தொகை வாய்ப்புகள்',
+                'scholarship-content': 'முதல் பட்டதாரி உதவித்தொகை, கல்வி கடன் திட்டங்களுக்கான இணைப்புகள்.',
+                'scholarship-link': 'விண்ணப்பிக்கவும்',
+                'stream-sci-math': 'அறிவியல் & பொறியியல் (B.E./B.Tech/B.Sc)',
+                'stream-arts-hum': 'கலை & மனிதநேயம் (B.A./B.Sc/சட்டம்)',
+                'stream-commerce': 'வர்த்தகம் & நிதி (B.Com/CA/BBA)',
+                'grok-prompt': 'தொழில் வழிகாட்டி, படிப்பு வாய்ப்புகள் அல்லது தேர்வுகள் பற்றி கேளுங்கள்! (அல்லது ஆங்கிலத்தில்)',
+                'chatbot-header': 'Grok AI – உங்கள் தொழில் வழிகாட்டி',
+                'open-grok-btn': 'Grok AI-ஐ திறக்கவும் (New Tab)'
             }
         };
 
@@ -256,41 +340,105 @@
         function setLanguage(lang) {
             currentLang = lang;
             const t = translations[lang];
-            for (const key in t) {
+            Object.keys(t).forEach(key => {
                 const el = document.getElementById(key);
                 if (el) el.textContent = t[key];
-            }
-            document.getElementById('chatbot-header').textContent = t['chatbot-header'];
+            });
+            document.getElementById('grok-prompt').textContent = t['grok-prompt'];
+            document.getElementById('open-grok-btn').textContent = t['open-grok-btn'];
             document.getElementById('page-title').textContent = t['page-title'];
         }
 
         function submitQuiz() {
             const form = document.getElementById('aptitude-quiz');
             const data = new FormData(form);
-            const scores = { 'sci-math':0, 'arts-hum':0, 'commerce':0 };
+            const scores = { 'sci-math': 0, 'arts-hum': 0, 'commerce': 0 };
+            let allAnswered = true;
 
-            for (let val of data.values()) scores[val]++;
+            for (let i = 1; i <= 3; i++) {
+                const ans = data.get('q' + i);
+                if (!ans) { allAnswered = false; break; }
+                scores[ans]++;
+            }
 
-            let max = 0, stream = 'arts-hum';
-            for (let s in scores) if (scores[s] > max) { max = scores[s]; stream = s; }
+            if (!allAnswered) {
+                alert(currentLang === 'ta' ? 'அனைத்து கேள்விகளுக்கும் பதிலளிக்கவும்.' : 'Please answer all questions.');
+                return;
+            }
 
-            document.getElementById('suggested-stream').textContent = translations[currentLang]['stream-' + stream];
+            let maxScore = 0, suggestedStream = 'arts-hum';
+            for (let stream in scores) {
+                if (scores[stream] > maxScore) {
+                    maxScore = scores[stream];
+                    suggestedStream = stream;
+                }
+            }
+
+            const t = translations[currentLang];
+            document.getElementById('suggested-stream').textContent = t['stream-' + suggestedStream];
+            document.getElementById('results-section').style.display = 'block';
+            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+
+            // Dynamic resources (simplified for brevity)
+            const linksList = document.getElementById('resource-links');
+            linksList.innerHTML = ''; // Clear
+            let resources = [];
+            if (suggestedStream === 'sci-math') {
+                resources = [
+                    { text: 'TNEA Counselling', href: 'https://www.tneaonline.org/' },
+                    { text: 'NEET Official', href: 'https://neet.nta.nic.in/' }
+                ];
+            } else if (suggestedStream === 'commerce') {
+                resources = [
+                    { text: 'ICAI (CA)', href: 'https://www.icai.org/' },
+                    { text: 'Colleges', href: 'tndce.tn.gov.in' }
+                ];
+            } else {
+                resources = [
+                    { text: 'Law University', href: 'https://tndalu.emsecure.in/' },
+                    { text: 'TNPSC Guidance', href: 'tnpsc.gov.in' }
+                ];
+            }
+            resources.forEach(res => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = res.href; a.target = '_blank'; a.textContent = res.text;
+                li.appendChild(a);
+                linksList.appendChild(li);
+            });
         }
 
-        // Chatbot toggle (இப்போது Grok AI)
-        document.getElementById('chatbot-toggle').onclick = () => {
-            const box = document.getElementById('chatbot-box');
-            if (box.style.display === 'flex') {
-                box.style.display = 'none';
-                document.getElementById('chatbot-toggle').textContent = 'AI';
+        // FIXED: Open Grok in New Tab
+        function openGrok() {
+            window.open('https://grok.x.ai', '_blank');
+            closeChatbox(); // Optional: Close the prompt box
+        }
+
+        const toggleBtn = document.getElementById('chatbot-toggle');
+        const chatBox = document.getElementById('chatbot-box');
+        toggleBtn.onclick = () => {
+            if (chatBox.style.display === 'flex') {
+                closeChatbox();
             } else {
-                box.style.display = 'flex';
-                document.getElementById('chatbot-toggle').textContent = 'X';
+                chatBox.style.display = 'flex';
+                toggleBtn.textContent = '✕';
             }
         };
 
-        // முதலில் தமிழில் தொடங்கு
-        setLanguage('ta');
+        function closeChatbox() {
+            chatBox.style.display = 'none';
+            toggleBtn.textContent = '🤖';
+        }
+
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+            if (!chatBox.contains(e.target) && !toggleBtn.contains(e.target)) {
+                closeChatbox();
+            }
+        });
+
+        // Init
+        setLanguage(currentLang);
     </script>
 </body>
 </html>
